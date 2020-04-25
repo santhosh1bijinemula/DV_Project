@@ -1,5 +1,7 @@
 
 var drug_side_effects_map;
+var radardata;
+var text_data;
 
 var fisheye = d3.fisheye.circular()
     .radius(200)
@@ -133,13 +135,15 @@ function color(d) {
 function click(d) {
     debugger;
     fisheye.focus(d3.mouse(this));
+    var t = d.name;
     if(!d.children && !d._children)
     {
         document.getElementById('drug_results').innerHTML = 'Side Effects for '+ d.name;
         if(drug_side_effects_map[d.name][0] === 'x')
         {
             document.getElementById("drug_side_effects").className = "alert bg-danger";
-            document.getElementById('drug_side_effects').innerHTML = 'Please Consult your Doctor'.big();
+            //document.getElementById('drug_side_effects').innerHTML = 'Please Consult your Doctor'.big();
+            document.getElementById('drug_side_effects').innerHTML = 'Rating is' + t;
         }
 
         else
@@ -156,7 +160,66 @@ function click(d) {
                     add(drug_side_effects_map[d.name][side_effect_ind]);
                 }
             console.log('drug_sideeffects',drug_side_effects_map[d.name]);
+            console.log('rating', radardata[d.name][0]["rating"]);
+            //document.getElementById('radar_data_id').innerHTML = 'Rating Info of '+ d.name;
+            var len = radardata[d.name].length;
+            var avg_rat=0, avg_eff=0, avg_sideeffects=0;
+            for(var i = 0; i<len; i++)
+            {
+                avg_rat += radardata[d.name][i]["rating"];
+                avg_eff += radardata[d.name][i]["effectiveness"];
+                avg_sideeffects += radardata[d.name][i]["sideEffects"];
+            }
+            avg_rat = avg_rat / len;
+            avg_eff = avg_eff /len;
+            avg_sideeffects = avg_sideeffects/len;
+            document.getElementById('radar_data_id').innerHTML = 'Rating value is ' + avg_rat + ' effect : ' + avg_eff;
+            //////////////////
+
+            var ctx = document.getElementById('radchart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Rating', 'Effectiveness', 'SideEffects'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [avg_rat, avg_eff, avg_sideeffects],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         }
+
+        ////////////////
+
+        //document.getElementById('drug_results').innerHTML = 'Rating Info of '+ d.name;
+        //document.getElementById('radar_data_id').innerHTML = 'Rating value is ' + radardata[d.name][0]["rating"];
+
 
     }
     else if (d.children) {
@@ -312,7 +375,14 @@ function populate_word_cloud(node)
     word_cloud_id.innerHTML="";
     word_c();
 }
+/////////////
+function addCode(code){
+    var JS = document.createElement('script');
+    JS.text = code;
+    document.body.appendChild(JS);
+}
 
+////////////
 node_xymap={};
 function populate_map_xy(node, val)
 {

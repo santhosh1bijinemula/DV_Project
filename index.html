@@ -17,7 +17,7 @@
 <br>
 
 <meta charset="utf-8">
-
+<script src ="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="myjs/jQuery-3.4.min.js"></script>
 <script src="myjs/drug_sideeffects.js"></script>
 <script src="myjs/jQuery.ui.js"></script>
@@ -87,6 +87,8 @@
 						<div id="drug_results"></div>
 					</div>
 					<div id="drug_side_effects" class = "alert bg-primary" ></div>
+					<div id="radar_data_id" class = "alert bg-primary" ></div>
+					<canvas id = "radchart" width = "50" height = "50"></canvas>
 				</div>
 			</div><!--/.col-->
 
@@ -109,6 +111,10 @@
 	d3.json("drug_sideeffects.json", function(error, json) {
 				if (error) throw error;
 				drug_side_effects_map = json;
+			});
+	d3.json("radarchart_data.json", function(error, json) {
+				if (error) throw error;
+				radardata = json;
 			});
 };
 	</script>
