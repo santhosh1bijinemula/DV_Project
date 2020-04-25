@@ -180,22 +180,15 @@ function click(d) {
 
             var ctx = document.getElementById('radchart').getContext('2d');
             ctx.canvas.width = 600;
-            ctx.canvas.height = 150;
+            ctx.canvas.height = 300;
             var myChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: ['Rating', 'Effectiveness', 'SideEffects'],
                     datasets: [{
-                        label: '# of Votes',
+                        label: 'Reviews for ' + d.name,
                         data: [avg_rat, avg_eff, avg_sideeffects],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
+                        backgroundColor: "rgba(255, 99, 132, 0.2)",
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
@@ -206,17 +199,8 @@ function click(d) {
                         ],
                         borderWidth: 1
                     }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    responsive: false
                 }
+
             });
         }
 
