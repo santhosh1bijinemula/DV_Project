@@ -87,7 +87,7 @@ function update() {
         .on('mouseout', tool_tip.hide);
 
     svg.on("mousemove", function () {
-        debugger;
+
         fisheye.focus(d3.mouse(this));
         var mouseX = d3.mouse(this)[0];
         var mouseY = d3.mouse(this)[1];
@@ -152,7 +152,9 @@ function click(d) {
 
             document.getElementById("drug_side_effects").className = "alert bg-primary";
             foo.innerHTML="";
-            debugger;
+
+
+
             var len = drug_side_effects_map[d.name].length;
             for (var side_effect_ind = 0;side_effect_ind < len;side_effect_ind++ )
                 {
@@ -173,10 +175,12 @@ function click(d) {
             avg_rat = avg_rat / len;
             avg_eff = avg_eff /len;
             avg_sideeffects = avg_sideeffects/len;
-            document.getElementById('radar_data_id').innerHTML = 'Rating value is ' + avg_rat + ' effect : ' + avg_eff;
+            //document.getElementById('radar_data_id').innerHTML = 'Rating value is ' + avg_rat + ' effect : ' + avg_eff;
             //////////////////
 
             var ctx = document.getElementById('radchart').getContext('2d');
+            ctx.canvas.width = 600;
+            ctx.canvas.height = 150;
             var myChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
@@ -210,7 +214,8 @@ function click(d) {
                                 beginAtZero: true
                             }
                         }]
-                    }
+                    },
+                    responsive: false
                 }
             });
         }
@@ -276,7 +281,6 @@ function click(d) {
     }
 
     update();
-    lens.attr("cx", mouseX).attr("cy", mouseY);
 
     node.each(function (d) {
         d.fisheye = fisheye(d);
