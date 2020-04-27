@@ -2,6 +2,7 @@
 var drug_side_effects_map;
 var radardata;
 var text_data;
+var myChart;
 
 var fisheye = d3.fisheye.circular()
     .radius(200)

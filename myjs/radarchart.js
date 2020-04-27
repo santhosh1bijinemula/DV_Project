@@ -1,3 +1,5 @@
+//var myChart;
+
 function radar_function(radardata,d)
 {
     var len = radardata[d.name].length;
@@ -8,13 +10,17 @@ function radar_function(radardata,d)
         avg_eff += radardata[d.name][i]["effectiveness"];
         avg_sideeffects += radardata[d.name][i]["sideEffects"];
     }
-    avg_rat = avg_rat / len;
-    avg_eff = avg_eff /len;
-    avg_sideeffects = avg_sideeffects/len;
+    avg_rat = (avg_rat / len).toFixed(2);
+    avg_eff = (avg_eff /len).toFixed(2);
+    avg_sideeffects = (avg_sideeffects/len).toFixed(2);
     var ctx = document.getElementById('radchart').getContext('2d');
     ctx.canvas.width = 300;
     ctx.canvas.height = 150;
-    var myChart = new Chart(ctx, {
+
+    if(myChart)
+        myChart.destroy();
+
+    myChart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: ['Rating', 'Effectiveness', 'SideEffects'],
