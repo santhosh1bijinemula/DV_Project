@@ -20,6 +20,7 @@
 <script src ="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="myjs/jQuery-3.4.min.js"></script>
 <script src="myjs/drug_sideeffects.js"></script>
+<script src="myjs/radarchart.js"></script>
 <script src="myjs/jQuery.ui.js"></script>
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src='myjs/autoComplete.js'></script>
@@ -68,11 +69,17 @@
 				<div class="panel-heading" id="panel">
 					<div id="results"></div>
 				</div>
-					<form role="search">
-						<div class="form-group" id="search_bar">
-							<input type="text" class="form-control input-sm" placeholder="Search in the Results">
-						</div>
-					</form>
+
+					<div class="input-group mb-3">
+					<input class="form-control my-0 py-1 " id="search_bar" type="text"
+								   placeholder="Search Below" aria-label="Search">
+					<button type="submit" class="input-group-text amber lighten-3"
+										onclick="search_func(document.getElementById('search_bar').value);">
+						<i class="fa fa-search fa-2x"> </i>
+					</button>
+
+					</div>
+
 
 					<div id ='wordcloud'></div>
 
@@ -82,24 +89,29 @@
 			
 			<div class="col-md-6">
 				<div class="panel panel-default ">
-					<div class="panel-heading">
+					<div class="panel-heading" id="heading" >
 						<div id="drug_results"></div>
 					</div>
-					<div id="drug_side_effects" class = "alert bg-primary" ></div>
-					<canvas id = "radchart" width = "50" height = "50"></canvas>
+
+					<div class="col-sm-3 col-md-6">
+						<div id="drug_side_effects" class = "alert bg-primary" ></div>
+					</div>
+					<div class="col-sm-3 col-md-6" id="radchar">
+						<canvas id = "radchart" width = "50" height = "50"></canvas>
+					</div>
+
 				</div>
 			</div><!--/.col-->
 
 		</div><!--/.row-->
 
-	
-	<script src="js/jquery-1.11.1.min.js"></script>
+
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="myjs/flowerchart.js"></script>
 	<script>
 		window.onload = function () {
-			//hideall();
+			hideall();
 	d3.json("final_map.json", function(error, json) {
 				if (error) throw error;
 				root = json;

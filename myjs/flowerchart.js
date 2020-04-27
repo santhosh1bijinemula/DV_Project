@@ -10,7 +10,7 @@ var fisheye = d3.fisheye.circular()
 var m = new Map();
 
 var width = 600,
-    height = 350,
+    height = 570,
     root;
 
 
@@ -136,14 +136,20 @@ function click(d) {
     debugger;
     fisheye.focus(d3.mouse(this));
     var t = d.name;
+    document.getElementById('search_bar').value = '';
+    unhide();
     if(!d.children && !d._children)
     {
-        document.getElementById('drug_results').innerHTML = 'Side Effects for '+ d.name;
+        document.getElementById('drug_results').innerHTML = 'Side Effect Results for '+ d.name;
+        document.getElementById("radchar").style.display = "block";
+        document.getElementById("drug_results").style.display = "block";
+        document.getElementById("drug_side_effects").style.display = "block";
+        document.getElementById("heading").style.display = "block";
+
         if(drug_side_effects_map[d.name][0] === 'x')
         {
             document.getElementById("drug_side_effects").className = "alert bg-danger";
-            //document.getElementById('drug_side_effects').innerHTML = 'Please Consult your Doctor'.big();
-            document.getElementById('drug_side_effects').innerHTML = 'Rating is' + t;
+            document.getElementById('drug_side_effects').innerHTML = 'Please Consult your Doctor'.big();
         }
 
         else
@@ -161,60 +167,17 @@ function click(d) {
                     console.log('side_effect',drug_side_effects_map[d.name][side_effect_ind]);
                     add(drug_side_effects_map[d.name][side_effect_ind]);
                 }
-            console.log('drug_sideeffects',drug_side_effects_map[d.name]);
-            console.log('rating', radardata[d.name][0]["rating"]);
-            //document.getElementById('radar_data_id').innerHTML = 'Rating Info of '+ d.name;
-            var len = radardata[d.name].length;
-            var avg_rat=0, avg_eff=0, avg_sideeffects=0;
-            for(var i = 0; i<len; i++)
-            {
-                avg_rat += radardata[d.name][i]["rating"];
-                avg_eff += radardata[d.name][i]["effectiveness"];
-                avg_sideeffects += radardata[d.name][i]["sideEffects"];
-            }
-            avg_rat = avg_rat / len;
-            avg_eff = avg_eff /len;
-            avg_sideeffects = avg_sideeffects/len;
-            //document.getElementById('radar_data_id').innerHTML = 'Rating value is ' + avg_rat + ' effect : ' + avg_eff;
-            //////////////////
-
-            var ctx = document.getElementById('radchart').getContext('2d');
-            ctx.canvas.width = 600;
-            ctx.canvas.height = 300;
-            var myChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Rating', 'Effectiveness', 'SideEffects'],
-                    datasets: [{
-                        label: 'Reviews for ' + d.name,
-                        data: [avg_rat, avg_eff, avg_sideeffects],
-                        backgroundColor: "rgba(255, 99, 132, 0.2)",
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                }
-
-            });
+            radar_function(radardata,d);
         }
-
-        ////////////////
-
-        //document.getElementById('drug_results').innerHTML = 'Rating Info of '+ d.name;
-        //document.getElementById('radar_data_id').innerHTML = 'Rating value is ' + radardata[d.name][0]["rating"];
-
 
     }
     else if (d.children) {
+        document.getElementById("radchar").style.display = "none";
+        document.getElementById("drug_results").style.display = "none";
+        document.getElementById("drug_side_effects").style.display = "none";
+        document.getElementById("heading").style.display = "none";
+
         document.getElementById('results').innerHTML = 'Results for '+ d.name;
-        document.getElementById('drug_results').innerHTML = "Results";
-        document.getElementById('drug_side_effects').innerHTML = '';
         delete_sideeffects();
         populate_map_xy(d,1);
         collapseAll(d);
@@ -226,42 +189,44 @@ function click(d) {
             document.getElementById('results').innerHTML='Results';
         else
             document.getElementById('results').innerHTML = 'Results for '+ d.name;
+        word_map = new Map();
         populate_word_cloud(d);
         words=[];
         d3.select("#wordcloud").innerHTML = "";
 
-        console.log(word_map);
-        topics = [...word_map.keys()];
-
-        console.log("topics",topics);
+        topics = Object.keys(word_map);
+        auto_func(topics);
         d.x= node_xymap[d.name]['x'];
         d.y= node_xymap[d.name]['y'];
         d.px= node_xymap[d.name]['px'];
         d.py= node_xymap[d.name]['py'];
         console.log('after',d);
-        //my_autofunc = auto_func(topics);
     } else {
         document.getElementById('results').innerHTML = 'Results for '+ d.name;
         document.getElementById('drug_results').innerHTML = "Results";
         document.getElementById('drug_side_effects').innerHTML = '';
+
+        document.getElementById('drug_results').style.display = "none";
+        document.getElementById("radchar").style.display = "none";
+        document.getElementById("drug_results").style.display = "none";
+        document.getElementById("drug_side_effects").style.display = "none";
+        document.getElementById("heading").style.display = "none";
+
         delete_sideeffects();
         populate_map_xy(d,2);
         console.log("click function",d);
         d.children = d._children;
         d._children = null;
+        word_map = new Map();
         populate_word_cloud(d);
         words=[];
         d3.select("#wordcloud").innerHTML = "";
-
-        console.log(word_map);
-        topics = [...word_map.keys()];
-
-        console.log("topics",topics);
+        topics = Object.keys(word_map);
+        auto_func(topics);
         d.x= node_xymap[d.name]['x'];
         d.y= node_xymap[d.name]['y'];
         d.px= node_xymap[d.name]['px'];
         d.py= node_xymap[d.name]['py'];
-        console.log('after',d);
     }
 
     update();

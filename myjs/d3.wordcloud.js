@@ -117,6 +117,7 @@
           return fill(d.text.toLowerCase());
         })
         .text(function(d) {
+          wordcloud_map[d.text] = d;
           return d.text;
         })
         // clickable words
@@ -125,7 +126,8 @@
         })
         .on("mouseover", function(d, i) {
           if (onwordclick !== undefined) {
-            d3.select(this).transition().style('font-size', d.size + 3 + 'px');
+            console.log("mouse over",this);
+            d3.select(this).transition().style('font-size', d.size + 15 + 'px');
           }
         })
         .on("mouseout", function(d, i) {
@@ -139,7 +141,17 @@
             onwordclick(d,i);
             }
         });
+      text.forEach(function(val)
+      {
+        console.log(val);
 
+        val.forEach(function(val1)
+        {
+          word_pos_map[val1.innerHTML] = val1;
+          console.log(val1.innerHTML);
+        });
+      });
+      global_text = text;
       vis.transition()
         .attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scaling + ")");
     };

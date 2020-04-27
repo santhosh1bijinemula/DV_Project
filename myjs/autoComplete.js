@@ -1,14 +1,13 @@
 my_autofunc = null;
-/*function auto_func(topics){
-    $("#autocomplete").autocomplete({
+function auto_func(topics){
+    $("#search_bar").autocomplete({
         source: topics
     });
 }
-*/
+
 $(function () {
     topics= ['symptoms'];
-    //my_autofunc = auto_func(topics);
-
+    my_autofunc = auto_func(topics);
 });
 
 $(document).ready(function () {
@@ -31,4 +30,15 @@ function hideall()
     document.getElementById("panel").style.display = "none";
     document.getElementById("search_bar").style.display = "none";
     document.getElementById("col_panel").style.display = "none";
+    document.getElementById("heading").style.display = "none";
+    document.getElementById("radchar").style.display = "none";
+}
+
+function unhide()
+{
+    document.getElementById("results").style.display = "block";
+    document.getElementById("wordcloud").style.display = "block";
+    document.getElementById("panel").style.display = "block";
+    document.getElementById("search_bar").style.display = "block";
+    document.getElementById("col_panel").style.display = "block";
 }
