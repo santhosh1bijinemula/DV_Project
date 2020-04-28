@@ -14,8 +14,8 @@ function radar_function(radardata,d)
     avg_eff = (avg_eff /len).toFixed(2);
     avg_sideeffects = (avg_sideeffects/len).toFixed(2);
     var ctx = document.getElementById('radchart').getContext('2d');
-    ctx.canvas.width = 300;
-    ctx.canvas.height = 150;
+    ctx.canvas.width = 350;
+    ctx.canvas.height = 190;
 
     if(myChart)
         myChart.destroy();

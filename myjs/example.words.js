@@ -56,11 +56,16 @@ var words = [];
 
 function search_func(val)
 {
-    console.log("global text", word_pos_map[val]);
-    for (const [key, value] of Object.entries(word_pos_map)) {
-        d3.select(word_pos_map[key]).transition().style('font-size', wordcloud_map[key].size + 'px');
-    }
-    d3.select(word_pos_map[val]).transition().style('font-size', wordcloud_map[val].size + 15 + 'px');
+    var arr = Object.keys(word_pos_map);
+    if(arr.includes(val))
+    {
+        console.log("global text", word_pos_map[val]);
+        for (const [key, value] of Object.entries(word_pos_map)) {
+            d3.select(word_pos_map[key]).transition().style('font-size', wordcloud_map[key].size + 'px');
+        }
+        d3.select(word_pos_map[val]).transition().style('font-size', wordcloud_map[val].size + 15 + 'px');
 
-    document.getElementById('search_bar').value = '';
+        document.getElementById('search_bar').value = '';
+    }
+
 }

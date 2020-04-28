@@ -1,7 +1,6 @@
 
 var drug_side_effects_map;
 var radardata;
-var text_data;
 var myChart;
 
 var fisheye = d3.fisheye.circular()
@@ -168,9 +167,8 @@ function click(d) {
                     console.log('side_effect',drug_side_effects_map[d.name][side_effect_ind]);
                     add(drug_side_effects_map[d.name][side_effect_ind]);
                 }
-            radar_function(radardata,d);
         }
-
+        radar_function(radardata,d);
     }
     else if (d.children) {
         document.getElementById("radchar").style.display = "none";
@@ -321,7 +319,20 @@ function populate_word_cloud(node)
     {
         new_node_json_object=child;
         new_node_json_object.text=child.name;
-        new_node_json_object.size= 50;
+
+        /*if(Object.keys(radardata).includes(child.name))
+        {
+            var len = radardata[child.name].length;
+            var avg_rat=0;
+            for(var i = 0; i<len; i++)
+                avg_rat += radardata[child.name][i]["rating"];
+
+            avg_rat = (avg_rat / len).toFixed(2);
+            new_node_json_object.size= Math.round( 2 + avg_rat );
+            console.log("object ",new_node_json_object.size);
+        }
+        else*/
+        new_node_json_object.size = 50;
         words.push(new_node_json_object);
     });
     console.log("words",words);

@@ -126,7 +126,6 @@
         })
         .on("mouseover", function(d, i) {
           if (onwordclick !== undefined) {
-            console.log("mouse over",this);
             d3.select(this).transition().style('font-size', d.size + 15 + 'px');
           }
         })
