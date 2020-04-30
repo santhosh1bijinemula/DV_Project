@@ -1,0 +1,252 @@
+abnormal heart rhythms
+abortion
+achalasia
+ache
+agitation
+allergic
+alopecia
+anemia
+anorexia
+anxiety
+appetite loss
+ascites
+asthenia
+asymptomatic
+ataxia
+attention
+attention span
+aura
+bedridden
+blanch
+bleeding
+bleeding problems
+blocked intestine
+blood clotting
+blurred vision
+bradycardia
+bradykinesia
+brittle nails
+bruit
+burning
+cancer
+cardiomegaly
+change in sleep habits
+chill
+choke
+clotting problems
+clumsiness
+clumsy
+comprehension
+constipation
+cough
+cyanosis
+death
+deep vein thrombosis
+dehydration
+delirium
+dental and oral health
+dermatitis
+diarrhea
+difficulty
+difficulty chewing
+difficulty swallowing
+disequilibrium
+dizziness
+drooling
+drowsiness
+dry mouth
+dry skin
+dullness
+dyspareunia
+dysphagia
+dyspnea
+dysuria
+edema
+elation
+enuresis
+erectile dysfunction
+erythema
+exhaustion
+fall
+fatigue
+fatigued
+feeling sleepy
+fever
+flaky nails
+flare
+flatulence
+floppy
+fluid around the lungs
+fluid in the abdomen
+fluid retention
+flushing
+frail
+gag
+gastrointestinal obstruction
+groggy
+gum sores
+haemorrhage
+hair fall
+hair loss
+hand-foot syndrome
+head failure
+headache
+headaches
+hearing impairment
+hearing problems
+heart problems
+heartburn
+hematuria
+hemiplegia
+hemorrhage
+high blood pressure
+high calcium levels
+hirsutism
+hoarseness
+hormone deprivation symptoms in men
+hot flashes
+hunger
+hypercalcemia
+hyperemesis
+hyperkalemia
+hypersomnia
+hyperventilation
+hypokalemia
+hyponatremia
+hypotension
+hypoxemia
+immobile
+immunotherapy
+incoherent
+increase thirst
+increased saliva
+increased urinating
+indigestion
+infection
+infertility
+inflammation
+insomnia
+internal bleeding
+intoxication
+joint pain
+joint stiffness
+judgment
+left
+lesion
+lethargy
+lightheadedness
+liver failure
+loss of appetite
+loss of balance
+loss of function
+low blood platelet count
+low platelet count
+low red blood cell count
+low white blood cell count
+lymphedema
+malaise
+malignant pleural effusion
+memory
+menopausal symptoms in women
+mental confusion
+milky
+moan
+moodiness
+moody
+mouth sores
+mucositis
+multitasking
+muscle aches
+muscle stiffness
+myalgia
+mydriasis
+myoclonus
+nausea
+nerve damage
+nerve problems
+nervous system side effects
+nervousness
+neuropathy
+neutropenia
+nightmare
+nightmares
+nonsmoker
+nose bleed
+numbness
+orthopnea
+osteoporosis
+overweight
+pain
+palmar-plantar erythrodysesthesia
+panic
+paresthesia
+polymyalgia
+polyuria
+posterior
+prodrome
+prostatism
+pruritus
+pulmonary embolism
+pustule
+rale
+rash
+reasoning
+redness
+restlenessness
+scarring
+sciatica
+scleral
+sedentary
+seizure
+sexual problems
+shaking
+shortness of breath
+sinus infection
+skin burns
+skin conditions
+skin rash
+skin reactions
+sleeplessness
+sleepy
+sneezesnore
+somnolence syndrome
+sore skin
+sore throat
+spasm
+stiff neck
+stiffness
+stuffy nose
+stupor
+suicidal
+superior vena cava syndrome
+sweat
+sweating
+swelling
+symptom
+syncope
+tachypnea
+taste changes
+thicken
+thinking
+thrombocytopenia
+tingling
+tinnitus
+tooth decay
+trembling
+tremor
+tremors
+underweight
+unhappy
+unresponsiveness
+unwell
+urinary incontinence
+vertigo
+vomiting
+weakness
+weight gain
+weight loss
+wheezing
+withdraw
+worry
+xerostomia
+yawning
