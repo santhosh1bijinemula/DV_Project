@@ -1,5 +1,7 @@
 
 var drug_side_effects_map;
+var radardata;
+var myChart;
 
 var fisheye = d3.fisheye.circular()
     .radius(200)
@@ -8,7 +10,7 @@ var fisheye = d3.fisheye.circular()
 var m = new Map();
 
 var width = 600,
-    height = 350,
+    height = 570,
     root;
 
 
@@ -85,7 +87,7 @@ function update() {
         .on('mouseout', tool_tip.hide);
 
     svg.on("mousemove", function () {
-        debugger;
+
         fisheye.focus(d3.mouse(this));
         var mouseX = d3.mouse(this)[0];
         var mouseY = d3.mouse(this)[1];
@@ -133,9 +135,17 @@ function color(d) {
 function click(d) {
     debugger;
     fisheye.focus(d3.mouse(this));
+    var t = d.name;
+    document.getElementById('search_bar').value = '';
+    unhide();
     if(!d.children && !d._children)
     {
-        document.getElementById('drug_results').innerHTML = 'Side Effects for '+ d.name;
+        document.getElementById('drug_results').innerHTML = 'Side Effect Results for '+ d.name;
+        document.getElementById("radchar").style.display = "block";
+        document.getElementById("drug_results").style.display = "block";
+        document.getElementById("drug_side_effects").style.display = "block";
+        document.getElementById("heading").style.display = "block";
+
         if(drug_side_effects_map[d.name][0] === 'x')
         {
             document.getElementById("drug_side_effects").className = "alert bg-danger";
@@ -148,21 +158,25 @@ function click(d) {
 
             document.getElementById("drug_side_effects").className = "alert bg-primary";
             foo.innerHTML="";
-            debugger;
+
+
+
             var len = drug_side_effects_map[d.name].length;
             for (var side_effect_ind = 0;side_effect_ind < len;side_effect_ind++ )
                 {
                     console.log('side_effect',drug_side_effects_map[d.name][side_effect_ind]);
                     add(drug_side_effects_map[d.name][side_effect_ind]);
                 }
-            console.log('drug_sideeffects',drug_side_effects_map[d.name]);
         }
-
+        radar_function(radardata,d);
     }
     else if (d.children) {
+        document.getElementById("radchar").style.display = "none";
+        document.getElementById("drug_results").style.display = "none";
+        document.getElementById("drug_side_effects").style.display = "none";
+        document.getElementById("heading").style.display = "none";
+
         document.getElementById('results').innerHTML = 'Results for '+ d.name;
-        document.getElementById('drug_results').innerHTML = "Results";
-        document.getElementById('drug_side_effects').innerHTML = '';
         delete_sideeffects();
         populate_map_xy(d,1);
         collapseAll(d);
@@ -174,46 +188,47 @@ function click(d) {
             document.getElementById('results').innerHTML='Results';
         else
             document.getElementById('results').innerHTML = 'Results for '+ d.name;
+        word_map = new Map();
         populate_word_cloud(d);
         words=[];
         d3.select("#wordcloud").innerHTML = "";
 
-        console.log(word_map);
-        topics = [...word_map.keys()];
-
-        console.log("topics",topics);
+        topics = Object.keys(word_map);
+        auto_func(topics);
         d.x= node_xymap[d.name]['x'];
         d.y= node_xymap[d.name]['y'];
         d.px= node_xymap[d.name]['px'];
         d.py= node_xymap[d.name]['py'];
         console.log('after',d);
-        //my_autofunc = auto_func(topics);
     } else {
         document.getElementById('results').innerHTML = 'Results for '+ d.name;
         document.getElementById('drug_results').innerHTML = "Results";
         document.getElementById('drug_side_effects').innerHTML = '';
+
+        document.getElementById('drug_results').style.display = "none";
+        document.getElementById("radchar").style.display = "none";
+        document.getElementById("drug_results").style.display = "none";
+        document.getElementById("drug_side_effects").style.display = "none";
+        document.getElementById("heading").style.display = "none";
+
         delete_sideeffects();
         populate_map_xy(d,2);
         console.log("click function",d);
         d.children = d._children;
         d._children = null;
+        word_map = new Map();
         populate_word_cloud(d);
         words=[];
         d3.select("#wordcloud").innerHTML = "";
-
-        console.log(word_map);
-        topics = [...word_map.keys()];
-
-        console.log("topics",topics);
+        topics = Object.keys(word_map);
+        auto_func(topics);
         d.x= node_xymap[d.name]['x'];
         d.y= node_xymap[d.name]['y'];
         d.px= node_xymap[d.name]['px'];
         d.py= node_xymap[d.name]['py'];
-        console.log('after',d);
     }
 
     update();
-    lens.attr("cx", mouseX).attr("cy", mouseY);
 
     node.each(function (d) {
         d.fisheye = fisheye(d);
@@ -304,7 +319,20 @@ function populate_word_cloud(node)
     {
         new_node_json_object=child;
         new_node_json_object.text=child.name;
-        new_node_json_object.size= 50;
+
+        /*if(Object.keys(radardata).includes(child.name))
+        {
+            var len = radardata[child.name].length;
+            var avg_rat=0;
+            for(var i = 0; i<len; i++)
+                avg_rat += radardata[child.name][i]["rating"];
+
+            avg_rat = (avg_rat / len).toFixed(2);
+            new_node_json_object.size= Math.round( 2 + avg_rat );
+            console.log("object ",new_node_json_object.size);
+        }
+        else*/
+        new_node_json_object.size = 50;
         words.push(new_node_json_object);
     });
     console.log("words",words);
@@ -312,7 +340,14 @@ function populate_word_cloud(node)
     word_cloud_id.innerHTML="";
     word_c();
 }
+/////////////
+function addCode(code){
+    var JS = document.createElement('script');
+    JS.text = code;
+    document.body.appendChild(JS);
+}
 
+////////////
 node_xymap={};
 function populate_map_xy(node, val)
 {
